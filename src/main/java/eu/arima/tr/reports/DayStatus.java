@@ -1,0 +1,6 @@
+package eu.arima.tr.reports;
+
+public enum DayStatus {
+
+	MISSING_HOURS, EXTRA_HOURS, RIGHT_HOURS, OVERLAPPING_HOURS, OUT_OF_TIMETABLE, NOT_WORKING_DAY;
+}

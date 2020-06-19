@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.3.1.RELEASE</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>eu.arima.tr</groupId>
+	<artifactId>timeReports-parametrized</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>timeReports-parametrized</name>
+	<description>Demo project for Spring Boot</description>
+
+	<properties>
+		<java.version>11</java.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.junit.vintage</groupId>
+					<artifactId>junit-vintage-engine</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			
+			<!-- pitest: mutation testing system -->
+			<plugin>
+				<groupId>org.pitest</groupId>
+				<artifactId>pitest-maven</artifactId>
+				<version>1.5.1</version>
+
+				<executions>
+					<execution>
+						<id>pit-report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>mutationCoverage</goal>
+						</goals>
+						<configuration>
+							<skip>${skipPitest}</skip>
+						</configuration>
+					</execution>
+				</executions>
+
+				<!-- https://github.com/hcoles/pitest/issues/284 -->
+				<!-- Need this to support JUnit 5 -->
+				<dependencies>
+					<dependency>
+						<groupId>org.pitest</groupId>
+						<artifactId>pitest-junit5-plugin</artifactId>
+						<version>0.12</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<reportsDirectory>${project.build.directory}/site/pit-reports</reportsDirectory>
+					<timestampedReports>false</timestampedReports>
+					<!-- https://pitest.org/quickstart/mutators/ -->
+					<mutators>
+						<mutator>DEFAULTS</mutator>
+					</mutators>
+					<targetClasses>
+						<param>**.*ServiceImpl</param>
+						<param>**.*Repository</param>
+					</targetClasses>
+					<targetTests>
+						<param>eu.arima.tr.*</param>
+					</targetTests>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

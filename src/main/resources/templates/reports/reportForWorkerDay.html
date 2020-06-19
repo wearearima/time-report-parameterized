@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'reports')}">
+
+  <body>
+
+    <h2 th:text="#{report.user.day.title}">Worker report</h2>
+	<div class="row">
+	    <p th:text="#{report.user.day.info}">Insert worker username and date</p>
+    </div>
+    <div class="row">
+   		<form action="#" th:action="@{/reports/report-worker-day}" th:object="${workerDayReportForm}" method="post">
+	   		<div class="row">
+		   		<div class="col-md-6 mb-3">
+		          <label for="workerUserName" th:text="#{worker.username}">Username</label>
+		          <input type="text" th:field="*{workerUserName}" class="form-control"/>
+		        </div>
+		        <div class="col-md-6 mb-3">
+		            <label for="date" th:text="#{day}">Date</label>
+		            <input type="date" th:field="*{date}" class="form-control">
+	          	</div>
+	          
+	        </div>
+	        <hr class="mb-4">
+        	<button class="btn btn-primary btn-lg btn-block" type="submit" th:text="#{action.createReport}">Generate</button>
+   	</form> 
+   	</div>
+    
+    <div class="row" th:if="${dayStatusSummary != null}">
+    	<br/>
+	    <p th:if="${not #lists.isEmpty(dayStatusSummary.statusList)}" th:text="#{result}">Result</p>
+	    <p th:if="${#lists.isEmpty(dayStatusSummary.statusList)}" th:text="#{result.empty}">Without result</p>
+    </div>
+    <div class="row" th:if="${dayStatusSummary != null}">
+      <div class="clearfix"></div>
+	   <ul th:each="status: ${dayStatusSummary.statusList}" class="list-group" style="list-style-type: none">
+	    	<li th:text="${status}" class="list-group-item" />
+	   </ul>
+	</div>
+  </body>
+
+</html>
