@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.stream.Stream;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -55,6 +56,7 @@ class GetDayStatusSummaryForWorkerAndDayTests {
 	}
 
 	@Test
+	@DisplayName("Given a list of worklogs with 5,1,1 hours duration the status is MISSING_HOURS")
 	void when_the_worklogs_for_resquested_day_are_5_1_1_hours_the_status_is_MISSING_HOURS() {
 		Worklog fiveHoursWL = mock(Worklog.class);
 		Worklog oneHourWL = mock(Worklog.class);
@@ -70,6 +72,7 @@ class GetDayStatusSummaryForWorkerAndDayTests {
 	}
 
 	@Test
+	@DisplayName("Given worklog with 8 hours duration the status is RIGHT_HOURS")
 	void when_the_worklog_for_the_resquested_day_is_8_hours_the_status_is_RIGHT_HOURS() {
 		Worklog wl = mock(Worklog.class);
 		when(wl.getDuration()).thenReturn(8);
@@ -83,6 +86,7 @@ class GetDayStatusSummaryForWorkerAndDayTests {
 	}
 
 	@Test
+	@DisplayName("Given a list of worklogs with 1,6,1 hours duration the status is RIGHT_HOURS")
 	void when_the_worklogs_for_resquested_day_are_1_6_1_hours_the_status_is_RIGHT_HOURS() {
 		Worklog sixHoursWL = mock(Worklog.class);
 		Worklog oneHourWL = mock(Worklog.class);
@@ -122,6 +126,7 @@ class GetDayStatusSummaryForWorkerAndDayTests {
 	}
 
 	@Test
+	@DisplayName("Given a list of worklogs with 5,2,2 hours duration the status is EXTRA_HOURS")
 	void when_the_worklogs_for_resquested_day_are_5_2_2_hours_the_status_is_EXTRA_HOURS() {
 		Worklog fiveHoursWL = mock(Worklog.class);
 		Worklog twoHoursWL = mock(Worklog.class);
@@ -136,6 +141,7 @@ class GetDayStatusSummaryForWorkerAndDayTests {
 	}
 
 	@Test
+	@DisplayName("Given the username of a worker the status result has that username")
 	void the_status_result_belongs_to_the_requested_worker() {
 		DayStatusSummary result = reportsService.getDayStatusSummaryForWorkerAndDay(USERNAME, DAY);
 
@@ -144,6 +150,7 @@ class GetDayStatusSummaryForWorkerAndDayTests {
 	}
 
 	@Test
+	@DisplayName("Given a date the status result has that date")
 	void the_status_result_belongs_to_the_requested_day() {
 		LocalDate day = DAY;
 		DayStatusSummary result = reportsService.getDayStatusSummaryForWorkerAndDay(USERNAME, day);
